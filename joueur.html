@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Jeu en ligne de bataille navale</title>
+        <style>
+            body {
+                background-color: gainsboro;
+            }
+            p span {
+                display: block; /*renvoi à la ligne des span pour remplaer le br*/
+                width: 80%; /*largeur du paragraphe*/
+                margin: auto; /*alignement du paragraphe au centre*/
+                font-family: "times new roman"; /*style de l'écriture*/
+                font-size: 25px; /*taille de l'écriture*/
+            }
+            h1  { 
+                font-family: "times new roman"; /*style de l'écriture*/
+                text-align:center; /*alignement du texte au centre*/
+                color: black; /*couleur du texte*/
+                font-size: 30px; /*taille de l'écriture*/
+                margin-top: 20px; /*espacement par rapport à la barre de navigation*/
+            }
+            
+            h4  { 
+                font-family: "times new roman"; /*style de l'écriture*/
+                text-align:center; /*alignement du texte au centre*/
+                color: black; /*couleur du texte*/
+                font-size: 25px; /*taille de l'écriture*/
+                
+            }
+
+            img {
+                width: 20px;
+            }
+            ul {
+              list-style-type: none; /*puces de la liste inexistentes*/
+              margin: 0; /*pas de marge extérieure*/
+              overflow: hidden; /*cache si le texte prend trop de place*/
+              background-color: #001080; /*couleur de la barre de navigation*/
+              padding-left: 42%; /*augmente marge intérieure gauche en fonction de la taille de la page pour centrer les liens au milieu de la page*/
+            }
+            li {
+              float: left; /*alignement à gauche*/
+            }
+
+            li a {
+              display: block; /*chaque ligne=lien=block*/
+              color: white; /*couleur de l'écriture*/
+              text-align: center; /*alignement du texte au centre*/
+              padding: 14px 16px; /*taille des marges à l'intérieur des 'blocks'*/
+              text-decoration: none; /*pas de soulignage même si c'est un lien*/
+              font-size: 23px; /*taille du texte*/
+            }
+            .lien_texte {
+                padding-top: 10px; /*augmente marge intérieure du haut pour centrer verticalement les liens au milieu de la barre de navigation*/
+                padding-bottom: 10px; /*augmente marge intérieure du bas pour centrer verticalement les liens au milieu de la barre de navigatioin*/
+            }
+
+            li a:hover:not(.active) {
+              background-color: #001BDA; /*couleur lorsqu'on survole*/
+            }
+
+            .active {
+              background-color: #001BDA; /*couleur de la page active*/
+            }
+            
+            /*pour les deux tableaux/grilles*/
+            table {
+                border-collapse: collapse; /* une seule ligne entre les cases */
+            }
+
+            table, th, td {
+                border: 1px solid black; /*largeur et style de la bordure*/
+                text-align: center; /* centre le texte dans le tableau/colonnes/cellules */
+                width: 500px;
+                height: 40px;
+            }
+
+
+            .tableau {
+                display: inline-block;
+                margin-top: 50px; /* Espace de 50 pixels avec le haut de la page */
+                width:700px;
+                margin: auto;
+            }
+
+            #tableau1 {
+               margin-left: 18% ;  /*DÃ©finit espacement avec cÃ´tÃ© gauche */
+            }
+
+            #tableau2 {
+                margin-left: 23%;  /*DÃ©finit espacement avec cÃ´tÃ© gauche */            
+            }
+
+            .case {
+                background-color: darkcyan; /* Definit la couleur des cases du tableau */
+            }
+
+
+            .touche {
+                background-color: darkred; /*Change la couleur des cases touchées */
+            }
+
+            .plouf {
+                background-color: white;
+            }
+
+            .bateau {
+                background-color: black;
+            }
+            button {
+                display: inline-block;
+                text-align: center;
+                margin-left: 43%;
+                margin-right: 30%;
+                margin-top: 5%;
+                width: 200px;
+            }
+
+        </style>
+    </head>
+    
+    <body>
+        
+        <ul>
+          <li class="lien_texte"><a class="active">Accueil</a></li>
+          <li class="lien_texte"><a href="http://localhost:3000/onglet"  target="_blank">Règles</a></li>
+        </ul>
+        
+        <h1 id=box> 
+        </h1>
+        
+        
+        <h1 id=DernierMessage> 
+        </h1>
+                
+                
+        <!--tableau du joueur-->
+        <div class="tableau">
+            <h4 id="montableau">Mon tableau</h4>
+            <table id="tableau1">
+              <tr>
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+                <th>H</th>
+                <th>I</th>
+                <th>J</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td class="case" id="A1"></td>
+                <td class="case" id="B1"></td>
+                <td class="case" id="C1"></td>
+                <td class="case" id="D1"></td>
+                <td class="case" id="E1"></td>
+                <td class="case" id="F1"></td>
+                <td class="case" id="G1"></td>
+                <td class="case" id="H1"></td>
+                <td class="case" id="I1"></td>
+                <td class="case" id="J1"></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="case" id="A2"></td>
+                <td class="case" id="B2"></td>
+                <td class="case" id="C2"></td>
+                <td class="case" id="D2"></td>
+                <td class="case" id="E2"></td>
+                <td class="case" id="F2"></td>
+                <td class="case" id="G2"></td>
+                <td class="case" id="H2"></td>
+                <td class="case" id="I2"></td>
+                <td class="case" id="J2"></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td class="case" id="A3"></td>
+                <td class="case" id="B3"></td>
+                <td class="case" id="C3"></td>
+                <td class="case" id="D3"></td>
+                <td class="case" id="E3"></td>
+                <td class="case" id="F3"></td>
+                <td class="case" id="G3"></td>
+                <td class="case" id="H3"></td>
+                <td class="case" id="I3"></td>
+                <td class="case" id="J3"></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td class="case" id="A4"></td>
+                <td class="case" id="B4"></td>
+                <td class="case" id="C4"></td>
+                <td class="case" id="D4"></td>
+                <td class="case" id="E4"></td>
+                <td class="case" id="F4"></td>
+                <td class="case" id="G4"></td>
+                <td class="case" id="H4"></td>
+                <td class="case" id="I4"></td>
+                <td class="case" id="J4"></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td class="case" id="A5"></td>
+                <td class="case" id="B5"></td>
+                <td class="case" id="C5"></td>
+                <td class="case" id="D5"></td>
+                <td class="case" id="E5"></td>
+                <td class="case" id="F5"></td>
+                <td class="case" id="G5"></td>
+                <td class="case" id="H5"></td>
+                <td class="case" id="I5"></td>
+                <td class="case" id="J5"></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td class="case" id="A6"></td>
+                <td class="case" id="B6"></td>
+                <td class="case" id="C6"></td>
+                <td class="case" id="D6"></td>
+                <td class="case" id="E6"></td>
+                <td class="case" id="F6"></td>
+                <td class="case" id="G6"></td>
+                <td class="case" id="H6"></td>
+                <td class="case" id="I6"></td>
+                <td class="case" id="J6"></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td class="case" id="A7"></td>
+                <td class="case" id="B7"></td>
+                <td class="case" id="C7"></td>
+                <td class="case" id="D7"></td>
+                <td class="case" id="E7"></td>
+                <td class="case" id="F7"></td>
+                <td class="case" id="G7"></td>
+                <td class="case" id="H7"></td>
+                <td class="case" id="I7"></td>
+                <td class="case" id="J7"></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td class="case" id="A8"></td>
+                <td class="case" id="B8"></td>
+                <td class="case" id="C8"></td>
+                <td class="case" id="D8"></td>
+                <td class="case" id="E8"></td>
+                <td class="case" id="F8"></td>
+                <td class="case" id="G8"></td>
+                <td class="case" id="H8"></td>
+                <td class="case" id="I8"></td>
+                <td class="case" id="J8"></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td class="case" id="A9"></td>
+                <td class="case" id="B9"></td>
+                <td class="case" id="C9"></td>
+                <td class="case" id="D9"></td>
+                <td class="case" id="E9"></td>
+                <td class="case" id="F9"></td>
+                <td class="case" id="G9"></td>
+                <td class="case" id="H9"></td>
+                <td class="case" id="I9"></td>
+                <td class="case" id="J9"></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td class="case" id="A10"></td>
+                <td class="case" id="B10"></td>
+                <td class="case" id="C10"></td>
+                <td class="case" id="D10"></td>
+                <td class="case" id="E10"></td>
+                <td class="case" id="F10"></td>
+                <td class="case" id="G10"></td>
+                <td class="case" id="H10"></td>
+                <td class="case" id="I10"></td>
+                <td class="case" id="J10"></td>
+              </tr>
+            </table>
+        </div>
+        
+        <!--tableau de l'adversaire-->
+        <div class="tableau">
+           <h4 id="nomadversaire">Tableau de l'adversaire</h4>
+           <table id="tableau2">
+              <tr>
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+                <th>H</th>
+                <th>I</th>
+                <th>J</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td class="case" id="A1"></td>
+                <td class="case" id="B1"></td>
+                <td class="case" id="C1"></td>
+                <td class="case" id="D1"></td>
+                <td class="case" id="E1"></td>
+                <td class="case" id="F1"></td>
+                <td class="case" id="G1"></td>
+                <td class="case" id="H1"></td>
+                <td class="case" id="I1"></td>
+                <td class="case" id="J1"></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="case" id="A2"></td>
+                <td class="case" id="B2"></td>
+                <td class="case" id="C2"></td>
+                <td class="case" id="D2"></td>
+                <td class="case" id="E2"></td>
+                <td class="case" id="F2"></td>
+                <td class="case" id="G2"></td>
+                <td class="case" id="H2"></td>
+                <td class="case" id="I2"></td>
+                <td class="case" id="J2"></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td class="case" id="A3"></td>
+                <td class="case" id="B3"></td>
+                <td class="case" id="C3"></td>
+                <td class="case" id="D3"></td>
+                <td class="case" id="E3"></td>
+                <td class="case" id="F3"></td>
+                <td class="case" id="G3"></td>
+                <td class="case" id="H3"></td>
+                <td class="case" id="I3"></td>
+                <td class="case" id="J3"></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td class="case" id="A4"></td>
+                <td class="case" id="B4"></td>
+                <td class="case" id="C4"></td>
+                <td class="case" id="D4"></td>
+                <td class="case" id="E4"></td>
+                <td class="case" id="F4"></td>
+                <td class="case" id="G4"></td>
+                <td class="case" id="H4"></td>
+                <td class="case" id="I4"></td>
+                <td class="case" id="J4"></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td class="case" id="A5"></td>
+                <td class="case" id="B5"></td>
+                <td class="case" id="C5"></td>
+                <td class="case" id="D5"></td>
+                <td class="case" id="E5"></td>
+                <td class="case" id="F5"></td>
+                <td class="case" id="G5"></td>
+                <td class="case" id="H5"></td>
+                <td class="case" id="I5"></td>
+                <td class="case" id="J5"></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td class="case" id="A6"></td>
+                <td class="case" id="B6"></td>
+                <td class="case" id="C6"></td>
+                <td class="case" id="D6"></td>
+                <td class="case" id="E6"></td>
+                <td class="case" id="F6"></td>
+                <td class="case" id="G6"></td>
+                <td class="case" id="H6"></td>
+                <td class="case" id="I6"></td>
+                <td class="case" id="J6"></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td class="case" id="A7"></td>
+                <td class="case" id="B7"></td>
+                <td class="case" id="C7"></td>
+                <td class="case" id="D7"></td>
+                <td class="case" id="E7"></td>
+                <td class="case" id="F7"></td>
+                <td class="case" id="G7"></td>
+                <td class="case" id="H7"></td>
+                <td class="case" id="I7"></td>
+                <td class="case" id="J7"></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td class="case" id="A8"></td>
+                <td class="case" id="B8"></td>
+                <td class="case" id="C8"></td>
+                <td class="case" id="D8"></td>
+                <td class="case" id="E8"></td>
+                <td class="case" id="F8"></td>
+                <td class="case" id="G8"></td>
+                <td class="case" id="H8"></td>
+                <td class="case" id="I8"></td>
+                <td class="case" id="J8"></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td class="case" id="A9"></td>
+                <td class="case" id="B9"></td>
+                <td class="case" id="C9"></td>
+                <td class="case" id="D9"></td>
+                <td class="case" id="E9"></td>
+                <td class="case" id="F9"></td>
+                <td class="case" id="G9"></td>
+                <td class="case" id="H9"></td>
+                <td class="case" id="I9"></td>
+                <td class="case" id="J9"></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td class="case" id="A10"></td>
+                <td class="case" id="B10"></td>
+                <td class="case" id="C10"></td>
+                <td class="case" id="D10"></td>
+                <td class="case" id="E10"></td>
+                <td class="case" id="F10"></td>
+                <td class="case" id="G10"></td>
+                <td class="case" id="H10"></td>
+                <td class="case" id="I10"></td>
+                <td class="case" id="J10"></td>
+              </tr>
+            </table>
+        </div>
+        
+        <button type="button" id="commencer">Commencer la partie</button>
+        
+        <!--on récupère le fichier socket.io pour gérer la communication avec le serveur du coté client-->
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <!--on récupère le fichier jquery pour effectuer des actions et événements-->
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            //on se connecte au serveur
+            var socket = io.connect('http://localhost:3000');
+                    
+            // On demande le pseudo au visiteur
+            var pseudo = prompt('Quel est votre pseudo ?');
+            
+            // Et on l'envoie avec le signal "petit_nouveau" au serveur
+            socket.emit('petit_nouveau', pseudo);
+            //on affiche le nom du joueur sur la page quand on a recu un "vous" du serveur 
+            socket.on('vous', function(vous){
+                document.getElementById("box").innerHTML="Vous êtes " + vous;
+            });
+            //on affiche le nom du de l'adversaire sur la page quand on a recu un "autre" du serveur 
+            socket.on('autre', function(autre){
+                document.getElementById("box").innerHTML=document.getElementById("box").innerHTML + " et vous jouez contre " + autre + ".";
+            });
+            
+            // On affiche une boîte de dialogue quand le serveur nous envoie un "message"
+            socket.on('message', function(message) {
+                alert(message);
+                document.getElementById("DernierMessage").innerHTML=message;
+            });
+            // On affiche une boîte de dialogue quand le serveur nous envoie une "attaque"
+            socket.on('attention', function(attaque) {
+                alert('Attention : ' + attaque);
+                document.getElementById("DernierMessage").innerHTML=attaque;
+            });
+            
+            let tab1 = document.getElementById("tableau1");
+            let tab2 = document.getElementById("tableau2");
+            let bouton = document.getElementById("commencer"); //Le bouton de lancement
+            var clicks = 0;
+            var maCase;
+            var monFond;
+            var check = 0;
+            let porteavion= new Array();
+            let cuirassé=new Array();
+            let sousmarin=new Array();
+            let croiseur=new Array();
+            let torpilleur=new Array();
+            
+            // Cette fonction fait buguer la communcation avec le serveur
+            function creerBooleens(){
+                for(i=0; i<5; i++){
+                     porteavion[i]= new Boolean(false);
+                }
+                for(j=0; i<4; i++){
+                     cuirassé[j]= new Boolean(false);
+                }
+                for(k=0; k<3; k++){
+                     sousmarin[k]= new Boolean(false);
+                }
+                for(l=0; l<3; l++){
+                     croiseur[l]= new Boolean(false);
+                }
+                for(m=0; m<2; m++){
+                     torpilleur[m]= new Boolean(false);
+                }   
+            } 
+            
+            // Lorsqu'on clique sur le tableau1, on active la fonction placement qui envoie un "placement" au serveur une fois les controles effectués
+            function placement(e){
+                //alert("Vous devez placer vos navires dans l'ordre suivant : porte-avion, cuirassé, sous-marin, croiseur et torpilleur.");
+                if (e.target && e.target.id){
+                    if (e.target.className=="bateau"){
+                        alert("Vous avez déjà placé un bateau ici.");
+                        return false;
+                    }
+                    if(clicks<17){
+                        var maCase=e.target.id;
+                        //alert("Vous avez placé une partie de votre bateau en " + maCase + ".");
+                        e.target.setAttribute("class","bateau");
+                        //clicks ++;
+                        socket.emit('enregistrer', maCase);
+                        if(clicks<5){
+                            porteavion[clicks]= true;
+                            clicks++;
+                            //alert("porte avion" + porteavion);
+                        }
+                        else if(clicks<9){
+                            cuirassé[clicks-5]= true;
+                            clicks++;
+                            //alert("cuirassé" + cuirassé);
+                        }
+                        else if(clicks<12){
+                            sousmarin[clicks-9]= true;
+                            clicks++;
+                        }
+                        else if(clicks<15){
+                            croiseur[clicks-12]= true;
+                            clicks ++;
+                        }
+                        else{
+                            torpilleur[clicks-15]= true;
+                            clicks ++;
+                        }
+                    }
+                    else{
+                        alert("Vous avez placé tous vos bateaux");
+                    }
+                }
+            }
+            tab1.addEventListener('click', placement, false);
+
+            function attaquer(e){
+                if (e.target && e.target.id){
+                    if (e.target.className=="touche"){
+                        alert("Vous avez déjà attaqué ici.");
+                        return false;
+                    }
+                    else{
+                        maCase=e.target.id;
+                        monFond=e.target;
+                        socket.emit('attaque', maCase);
+                        return false;
+                    }
+                }
+            }
+            tab2.addEventListener('click', attaquer, false);
+            
+            //on affiche le message "reussi" quand le serveur en nous envoie un dans une boite de dialogue et sur la page et on change la case cliquée en rouge
+            socket.on('reussi', function(reussi){
+                alert(reussi);
+                document.getElementById("DernierMessage").innerHTML=reussi;
+                monFond.setAttribute("class","touche");
+            });
+            
+            //on affiche le message "perdu" quand le serveur en nous envoie un dans une boite de dialogue et sur la page et on change la case cliquée en blanc
+            socket.on('perdu', function(perdu){
+                alert(perdu);
+                document.getElementById("DernierMessage").innerHTML=perdu;
+                monFond.setAttribute("class","plouf");
+            });
+            
+            //on affiche le message quand le serveur en nous envoie un "touche" dans une boite de dialogue et sur la page et on change la case attaquée en rouge
+            socket.on('touche', function(maCase){
+                //alert("pseudo autre = " + autre)
+                //alert("L'autre joueur a touché en " + maCase + ".");
+                //document.getElementById("DernierMessage").innerHTML= "L'autre joueur a touché en " + maCase + ".";
+                document.getElementById(maCase).setAttribute("class","touche");
+            });
+            
+            //on affiche le message quand le serveur en nous envoie un "eau" dans une boite de dialogue et sur la page et on change la case attaquée en blanc
+            socket.on('eau', function(maCase){
+                //alert("pseudo autre = " + autre)
+                //alert("L'autre joueur a tapé dans l'eau en " + maCase + ".");
+                //document.getElementById("DernierMessage").innerHTML= "L'autre joueur a tapé dans l'eau en " + maCase + ".";
+                document.getElementById(maCase).setAttribute("class","plouf");
+            });
+            
+            function lancement(){
+                for(i=0;i<5; i++){
+                    if(porteavion[i]== true){
+                        check++;
+                    }
+                }
+                for(j=0;j<4; j++){
+                    if(cuirassé[j]== true){
+                        check++;
+                    }
+                }
+                for(k=0; k<3; k++){
+                    if(sousmarin[k]== true){
+                        check++;
+                    }
+                }
+                for(l=0; l<3; l++){
+                    if(croiseur[l]== true){
+                        check++;
+                    }
+                }
+                for(m=0; m<2; m++){
+                    if(torpilleur[m]== true){
+                        check++;
+                    }
+                }
+                if(check==17){
+                    alert("check ok");
+                    socket.emit('check', pseudo);
+                }
+                else{
+                    alert("Les navires ne sont pas placés correctement.");
+                    //comment réinitialiser les couleurs des cases ?
+                    socket.emit('reboot');
+                    clicks=0;
+                    check=0;
+                }
+            }
+                
+            bouton.addEventListener('click', lancement, false);
+            
+            function test(){
+                    //alert("action");
+                    //window.open('localhost:3000/onglet', '_blank');
+                    socket.emit('action', 'jai cliqué');
+                }
+            
+            let bt = document.getElementById("bouton");
+            bt.addEventListener('click', test, false);
+            
+        </script>
+        
+    </body>
+</html>

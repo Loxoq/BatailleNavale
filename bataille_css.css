@@ -1,0 +1,118 @@
+/*couleur de fond*/
+body {
+    background-color: gainsboro;
+}
+
+/*pour le texte du paragraphe*/
+p span {
+    display: block; /*renvoi Ã  la ligne des span pour remplacer le br*/
+    width: 80%; /*largeur du paragraphe*/
+    margin: auto; /*alignement du paragraphe au centre*/
+    font-family: "times new roman"; /*style de l'écriture*/
+    font-size: 25px; /*taille de l'écriture*/
+}
+
+/*pour les titres niveau h1*/
+h1  { 
+    font-family: "times new roman"; /*style de l'écriture*/
+    text-align:center; /*alignement du texte au centre*/
+    color: black; /*couleur du texte*/
+    font-size: 30px; /*taille de l'écriture*/
+    margin-top: 20px; /*espacement par rapport Ã  la barre de navigation*/
+}
+
+img {
+    width: 20px;
+}
+
+/*pour la liste de la barre de navigation*/
+ul {
+  list-style-type: none; /*puces de la liste inexistentes*/
+  margin: 0; /*pas de marge extérieure*/
+  overflow: hidden; /*cache si le texte prend trop de place*/
+  background-color: #001080; /*couleur de la barre de navigation*/
+  padding-left: 42%; /*augmente marge intérieure gauche en fonction de la taille de la page pour centrer les liens au milieu de la page*/
+}   
+    
+/*pour les lignes de la liste*/
+li {
+  float: left; /*alignement Ã  gauche*/
+}
+
+li a {
+  display: block; /*chaque ligne=lien=block*/
+  color: white; /*couleur de l'écriture*/
+  text-align: center; /*alignement du texte au centre*/
+  padding: 14px 16px; /*taille des marges Ã  l'intérieur des 'blocks'*/
+  text-decoration: none; /*pas de soulignage même si c'est un lien*/
+  font-size: 23px; /*taille du texte*/
+}
+
+/*pour les 2 lien en texte*/
+.lien_texte {
+    padding-top: 10px; /*augmente marge intérieure du haut pour centrer verticalement les liens au milieu de la barre de navigatioin*/
+    padding-bottom: 10px; /*augmente marge intérieure du bas pour centrer verticalement les liens au milieu de la barre de navigation*/
+}
+
+li a:hover:not(.active) {
+  background-color: #001BDA; /*couleur lorsqu'on survole*/
+}
+
+.active {
+  background-color: #001BDA; /*couleur de la page active*/
+}
+
+/*pour les deux tableaux/grilles*/
+table {
+    border-collapse: collapse; /* une seule ligne entre les cases */
+}
+
+table, th, td {
+    border: 1px solid black; /*largeur et style de la bordure*/
+    text-align: center; /* centre le texte dans le tableau/colonnes/cellules */
+    width: 500px;
+    height: 40px;
+}
+
+
+.tableau {
+                display: inline-block;
+                margin-top: 50px; /* Espace de 50 pixels avec le haut de la page */
+                width: 700px;
+                /*margin-left: 100px; */
+                margin: auto;
+            }
+
+#tableau1 {
+               margin-left: 18% ;  /*DÃ©finit espacement avec cÃ´tÃ© gauche */
+            }
+
+#tableau2 {
+                margin-left: 23%;  /*DÃ©finit espacement avec cÃ´tÃ© gauche */
+            }
+
+.case {
+                background-color: darkcyan; /* Definit la couleur des cases du tableau */
+            }
+
+
+.touche {
+                background-color: darkred; /*Change la couleur des cases touchées */
+            }
+
+.plouf {
+                background-color: white;
+            }
+
+.bateau {
+                background-color: black;
+            }
+            
+button {
+                display: inline-block;
+                text-align: center;
+                margin-left: 43%;
+                margin-right: 30%;
+                margin-top: 5%;
+                width: 200px;
+            }
